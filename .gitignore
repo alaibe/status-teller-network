@@ -4,7 +4,6 @@ chains.json
 config/production/password
 config/livenet/password
 coverage
-dist
 node_modules
 yarn-error.log
 cypress/videos/*

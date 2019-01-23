@@ -1,3 +1,5 @@
+var secret = require('../.secret.json')
+
 module.exports = {
   // default applies to all environments
   default: {
@@ -107,6 +109,18 @@ module.exports = {
   // merges with the settings in default
   // used with "embark run testnet"
   testnet: {
+    deployment: {
+      accounts: [
+        {
+          mnemonic: secret.mnemonic,
+          numAddresses: "2"
+        }
+      ],
+      host: "rinkeby.infura.io/#{secret.infuraKey}",
+      port: false,
+      protocol: 'https',
+      type: "rpc"
+    }
   },
 
   // merges with the settings in default

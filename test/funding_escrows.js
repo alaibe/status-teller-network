@@ -68,6 +68,8 @@ contract("Escrow Funding", function() {
 
   before(async () => {
     console.log(License.options.address);
+console.log(await License.methods.isLicenseOwner(accounts[0]).call());
+
     await SNT.methods.generateTokens(accounts[0], 1000).send();
     const encodedCall = License.methods.buy().encodeABI();
     await SNT.methods.approveAndCall(License.options.address, 10, encodedCall).send({from: accounts[0]});

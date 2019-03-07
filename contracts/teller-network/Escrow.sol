@@ -129,6 +129,8 @@ contract Escrow is Pausable, MessageSigned, Fees {
         require(_from == seller, "Only the seller can fund this escrow");
         require(trx.status == EscrowStatus.CREATED || trx.status == EscrowStatus.FUNDED, "Invalid escrow status");
 
+        payFee(_from, _escrowId);
+
         if(token == address(0)){
             require(msg.value == _tokenAmount, "ETH amount is required");
         } else {
@@ -142,7 +144,6 @@ contract Escrow is Pausable, MessageSigned, Fees {
         transactions[_escrowId].expirationTime = _expirationTime;
         transactions[_escrowId].status = EscrowStatus.FUNDED;
 
-        payFee(_from, _escrowId);
 
         emit Funded(_escrowId, _expirationTime, _tokenAmount);
     }
@@ -528,10 +529,10 @@ contract Escrow is Pausable, MessageSigned, Fees {
      * @param _data Abi encoded data with selector of `register(bytes32,address,bytes32,bytes32)`.
      */
     function receiveApproval(address _from, uint256 _amount, address _token, bytes memory _data) public {
-        require(_amount >= feeAmount, "Wrong value");
+        require(_amount >= feeAmount, "Amount should include fee");
         require(_token == address(feeToken), "Wrong token");
         require(_token == address(msg.sender), "Wrong call");
-        require(_data.length == 4, "Wrong data length");
+        require(_data.length == 100, "Wrong data length");
 
         bytes4 sig;
         bytes32 value1;

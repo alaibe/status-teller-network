@@ -62,7 +62,7 @@ contract Fees is Ownable {
         feePaid[_id] = true;
         feeBalance += feeAmount;
 
-        require(feeToken.allowance(_from, address(this)) >= feeAmount, "Allowance not set for this contract for specified amount");
+        require(feeToken.allowance(_from, address(this)) >= feeAmount, "Allowance not set for this contract for specified fee");
         require(feeToken.transferFrom(_from, address(this), feeAmount), "Unsuccessful token transfer");
     }
 

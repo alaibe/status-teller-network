@@ -88,7 +88,6 @@ contract("Escrow", function() {
     await SNT.methods.generateTokens(accounts[0], 1000).send();
     const encodedCall = License.methods.buy().encodeABI();
     await SNT.methods.approveAndCall(License.options.address, 10, encodedCall).send({from: accounts[0]});
-      console.log(License.options.address);
 
     receipt  = await MetadataStore.methods.addOffer(TestUtils.zeroAddress, License.address, "London", "USD", "Iuri", [0], 0, 1).send({from: accounts[0]});
     ethOfferId = receipt.events.OfferAdded.returnValues.offerId;
